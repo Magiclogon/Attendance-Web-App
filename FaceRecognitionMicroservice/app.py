@@ -1,10 +1,3 @@
-"""
-Face Recognition Microservice
-
-A Flask API with two endpoints:
-1. /register-face - Register an employee's face with their ID
-2. /verify-face - Verify if a given face matches the registered employee ID
-"""
 
 from flask import Flask, request, jsonify
 import os
@@ -29,9 +22,9 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(DATABASE_FOLDER, exist_ok=True)
 
 # Set DeepFace configurations
-MODEL_NAME = "VGG-Face"  # Options: "VGG-Face", "Facenet", "Facenet512", "OpenFace", "DeepFace", "DeepID", "ArcFace", "Dlib"
-DISTANCE_METRIC = "cosine"  # Options: "cosine", "euclidean", "euclidean_l2"
-DETECTOR_BACKEND = "opencv"  # Options: "opencv", "ssd", "dlib", "mtcnn", "retinaface"
+MODEL_NAME = "VGG-Face"
+DISTANCE_METRIC = "cosine"
+DETECTOR_BACKEND = "opencv"
 
 # Load existing embeddings or create empty database
 face_db = {}
@@ -45,7 +38,7 @@ def save_embeddings():
 
 def process_image(image_path):
     try:
-        # First, detect faces to ensure there's exactly one face
+        # detect faces (1 face max)
         faces = DeepFace.extract_faces(image_path, detector_backend=DETECTOR_BACKEND)
         
         if len(faces) == 0:
@@ -79,7 +72,7 @@ def register_face():
     image.save(temp_path)
     
     try:
-        # Process image to get face embedding
+        # get face embedding from image
         embedding, error = process_image(temp_path)
         if error:
             return jsonify({'success': False, 'error': error}), 400
@@ -95,11 +88,11 @@ def register_face():
         employee_folder = os.path.join(DATABASE_FOLDER, employee_id)
         os.makedirs(employee_folder, exist_ok=True)
         
-        # Save the registration image
+        # Save the image
         registration_image = os.path.join(employee_folder, f"registered_face.jpg")
         shutil.copy(temp_path, registration_image)
         
-        # Save embeddings to disk
+        # Save embeddings
         save_embeddings()
         
         return jsonify({
@@ -125,11 +118,11 @@ def verify_face():
     employee_id = request.form['employee_id']
     image = request.files['image']
     
-    # Check if employee exists in database
+    # Employee exists?
     if employee_id not in face_db:
         return jsonify({'success': False, 'error': 'Employee not registered'}), 404
     
-    # Save image temporarily
+    # Save temp image
     temp_filename = f"{uuid.uuid4()}.jpg"
     temp_path = os.path.join(UPLOAD_FOLDER, temp_filename)
     image.save(temp_path)
@@ -143,13 +136,13 @@ def verify_face():
         # Get registered embedding
         registered_embedding = face_db[employee_id]['embedding']
         
-        # Verify face using DeepFace
+        # Verify face
         try:
-            # We'll save the registered face temporarily to use with DeepFace.verify
+            # save the sent image to use it with deepface
             registered_face_path = os.path.join(UPLOAD_FOLDER, f"{uuid.uuid4()}_reg.jpg")
             shutil.copy(os.path.join(DATABASE_FOLDER, employee_id, "registered_face.jpg"), registered_face_path)
             
-            # Use DeepFace.verify to compare faces
+            # use deepface
             result = DeepFace.verify(
                 img1_path=temp_path,
                 img2_path=registered_face_path,
@@ -158,7 +151,7 @@ def verify_face():
                 detector_backend=DETECTOR_BACKEND
             )
             
-            # Clean up temporary registered face file
+            # delete temp files
             if os.path.exists(registered_face_path):
                 os.remove(registered_face_path)
                 
@@ -176,7 +169,6 @@ def verify_face():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
     finally:
-        # Clean up temporary file
         if os.path.exists(temp_path):
             os.remove(temp_path)
 
