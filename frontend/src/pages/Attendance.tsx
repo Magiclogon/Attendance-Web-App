@@ -12,14 +12,6 @@ import { Calendar as CalendarIcon } from 'lucide-react';
 import attendanceManagementService from '@/services/attendanceManagementService';
 
 
-const employees = [
-  { id: '1', name: 'John Smith' },
-  { id: '2', name: 'Sarah Johnson' },
-  { id: '3', name: 'Michael Brown' },
-  { id: '4', name: 'Emily Davis' },
-  { id: '5', name: 'David Wilson' }
-];
-
 const AttendancePage = () => {
   const [records, setRecords] = useState<AttendanceRecord[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
@@ -58,20 +50,6 @@ const AttendancePage = () => {
 
     fetchRecords();
   }, [selectedDate])
-
-  const handleAddRecord = (recordData: any) => {
-    const newRecord = {
-      ...recordData,
-      id: Math.random().toString(36).slice(2, 9),
-      employeeName: employees.find(e => e.id === recordData.employeeId)?.name || '',
-      date: recordData.date.toISOString().split('T')[0]
-    };
-    setRecords([...records, newRecord]);
-    toast({
-      title: "Attendance recorded",
-      description: `Attendance for ${newRecord.employeeName} has been recorded.`,
-    });
-  };
 
   const handleUpdateStatus = async (id: number, status: 'present' | 'absent' | 'late' | 'free') => {
 
@@ -135,7 +113,6 @@ const AttendancePage = () => {
             <h2 className="text-3xl font-bold tracking-tight">Attendance</h2>
             <p className="text-muted-foreground">Track and manage employee attendance.</p>
           </div>
-          <AttendanceForm onSubmit={handleAddRecord} employees={employees} />
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-4">
