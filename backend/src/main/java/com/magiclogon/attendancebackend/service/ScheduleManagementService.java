@@ -4,6 +4,7 @@ import com.magiclogon.attendancebackend.dto.CreateScheduleDTO;
 import com.magiclogon.attendancebackend.dto.ScheduleOfEmployeeResponseDTO;
 import com.magiclogon.attendancebackend.model.Employee;
 import com.magiclogon.attendancebackend.model.Manager;
+import com.magiclogon.attendancebackend.model.RecurringType;
 import com.magiclogon.attendancebackend.model.Schedule;
 import com.magiclogon.attendancebackend.repository.EmployeeRepository;
 import com.magiclogon.attendancebackend.repository.ManagerRepository;
@@ -62,12 +63,36 @@ public class ScheduleManagementService {
             }
 
             // See if there's a schedule like that one.
-            scheduleRepository.findByEmployeeIdAndDate(employee_id, request.getDate()).ifPresent(scheduleRepository::delete);
+            if(request.getRecurringType() == RecurringType.NONE) {
+                scheduleRepository.findByEmployeeIdAndDate(employee_id, request.getDate()).ifPresent(scheduleRepository::delete);
 
-            Schedule schedule = new Schedule(employee.get(), request.getScheduleName(), request.getDate(), request.getCheckinTime(), request.getCheckoutTime(),
-                    request.getBreakStartTime(), request.getBreakEndTime(), request.getIsDayOff());
+                Schedule schedule = new Schedule(employee.get(), request.getScheduleName(), request.getDate(), request.getCheckinTime(), request.getCheckoutTime(),
+                        request.getBreakStartTime(), request.getBreakEndTime(), request.getIsDayOff());
 
-            scheduleRepository.save(schedule);
+                scheduleRepository.save(schedule);
+            }
+
+            else if(request.getRecurringType() == RecurringType.DAILY) {
+                for(int i = 0; i < 7; i++) {
+                    scheduleRepository.findByEmployeeIdAndDate(employee_id, request.getDate().plusDays(i)).ifPresent(scheduleRepository::delete);
+
+                    Schedule schedule = new Schedule(employee.get(), request.getScheduleName(), request.getDate().plusDays(i), request.getCheckinTime(), request.getCheckoutTime(),
+                            request.getBreakStartTime(), request.getBreakEndTime(), request.getIsDayOff());
+
+                    scheduleRepository.save(schedule);
+                }
+            }
+
+            else if(request.getRecurringType() == RecurringType.WEEKLY) {
+                for(int i = 0; i < 4; i++) {
+                    scheduleRepository.findByEmployeeIdAndDate(employee_id, request.getDate().plusWeeks(i)).ifPresent(scheduleRepository::delete);
+
+                    Schedule schedule = new Schedule(employee.get(), request.getScheduleName(), request.getDate().plusWeeks(i), request.getCheckinTime(), request.getCheckoutTime(),
+                            request.getBreakStartTime(), request.getBreakEndTime(), request.getIsDayOff());
+
+                    scheduleRepository.save(schedule);
+                }
+            }
         }
 
         return unsuccessful_ids;

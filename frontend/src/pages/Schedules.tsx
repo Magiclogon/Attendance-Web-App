@@ -72,8 +72,7 @@ const SchedulesPage = () => {
     recurringType?: string; 
   }) => {
 
-    console.log("CLICKED")
-    
+    console.log(data)    
     const scheduleObject = {
       employees_ids: data.employeeIds.map((id) => parseInt(id, 10)),
       schedule: {
@@ -84,6 +83,7 @@ const SchedulesPage = () => {
         breakStartTime: data.breakStartTime,
         breakEndTime: data.breakEndTime,
         isDayOff: false,
+        recurringType: data.recurringType.toUpperCase() || "NONE",
       }
     }
     console.log("Schedule Object:", scheduleObject);

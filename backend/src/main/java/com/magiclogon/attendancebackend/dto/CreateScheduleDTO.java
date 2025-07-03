@@ -1,5 +1,6 @@
 package com.magiclogon.attendancebackend.dto;
 
+import com.magiclogon.attendancebackend.model.RecurringType;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -14,4 +15,5 @@ public class CreateScheduleDTO {
     private LocalTime breakStartTime;
     private LocalTime breakEndTime;
     private Boolean isDayOff;
+    private RecurringType recurringType;
 }

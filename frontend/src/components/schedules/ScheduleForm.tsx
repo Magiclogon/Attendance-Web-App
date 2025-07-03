@@ -50,7 +50,7 @@ export function ScheduleForm({ onSubmit, employees }: ScheduleFormProps) {
       breakStartTime: '12:00',
       breakEndTime: '13:00',
       employeeIds: [],
-      recurringType: 'none',
+      recurringType: 'none', // Default to weekly
     },
   });
 
@@ -151,7 +151,6 @@ export function ScheduleForm({ onSubmit, employees }: ScheduleFormProps) {
                         <SelectItem value="none">None (One time)</SelectItem>
                         <SelectItem value="daily">Daily</SelectItem>
                         <SelectItem value="weekly">Weekly</SelectItem>
-                        <SelectItem value="monthly">Monthly</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />
