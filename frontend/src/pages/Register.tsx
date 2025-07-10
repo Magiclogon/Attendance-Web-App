@@ -304,11 +304,7 @@ const Register = () => {
               <Label htmlFor="terms" className="text-sm cursor-pointer">
                 I agree to the{' '}
                 <Link to="/terms" className="text-primary hover:underline">
-                  terms of service
-                </Link>
-                {' '}and{' '}
-                <Link to="/privacy" className="text-primary hover:underline">
-                  privacy policy
+                  terms of service.
                 </Link>
               </Label>
             </div>

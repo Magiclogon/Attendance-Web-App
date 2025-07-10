@@ -117,6 +117,12 @@ const Login = () => {
               Create one
             </Link>
           </p>
+          <p className="text-sm text-muted-foreground">
+            Are you a manager and want to setup a camera?{' '}
+            <Link to="/camera" className="text-primary hover:underline">
+              Setup
+            </Link>
+          </p>
         </CardFooter>
       </Card>
     </div>
