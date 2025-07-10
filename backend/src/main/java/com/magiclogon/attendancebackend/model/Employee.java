@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class Employee extends User {
     @JoinColumn(name = "entreprise_id", referencedColumnName = "id")
     private Entreprise entreprise;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "VARCHAR(255) DEFAULT 'NONE'")
     private String positionTitle;
 
     @OneToMany(mappedBy = "employee")
@@ -29,7 +30,7 @@ public class Employee extends User {
     @JoinColumn(name = "manager_id")
     private Manager manager;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     private boolean hasRegisteredFace = false;
 
 }
