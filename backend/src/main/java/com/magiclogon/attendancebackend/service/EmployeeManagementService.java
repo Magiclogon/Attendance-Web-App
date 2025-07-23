@@ -148,8 +148,8 @@ public class EmployeeManagementService {
         PageRequest pageRequest = PageRequest.of(0, 7);
         for(Employee employee : employees) {
             EmployeeResponseDTO employeeDTO = EmployeeResponseDTO.mapToDTO(employee);
-            List<Schedule> schedules = scheduleRepository.findByEmployeeIdAndDateIsAfterOrderByDateAsc(employee.getId(), LocalDate.now(), pageRequest);
-            List<Presence> presences = presenceRepository.findByEmployeeIdAndDateIsBeforeOrderByDateDesc(employee.getId(), LocalDate.now(), pageRequest);
+            List<Schedule> schedules = scheduleRepository.findByEmployeeIdAndDateIsAfterOrderByDateAsc(employee.getId(), LocalDate.now().minusDays(1), pageRequest);
+            List<Presence> presences = presenceRepository.findByEmployeeIdAndDateIsBeforeOrderByDateDesc(employee.getId(), LocalDate.now().minusDays(1), pageRequest);
 
             List<ScheduleOfEmployeeResponseDTO> schedulesDTOs = schedules.stream()
                     .map(ScheduleOfEmployeeResponseDTO::mapToDTO)

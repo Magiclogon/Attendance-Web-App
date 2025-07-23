@@ -20,6 +20,12 @@ interface AttendanceTableProps {
   onUpdateStatus: (id: number, status: 'present' | 'absent' | 'late' | 'free') => void;
 }
 
+const formatTime = (timeString: string | undefined) => {
+  if (!timeString) return '-';
+  return timeString.slice(0, 5); // Extracts "HH:MM"
+};
+
+
 export function AttendanceTable({ records, onUpdateStatus }: AttendanceTableProps) {
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -68,8 +74,20 @@ export function AttendanceTable({ records, onUpdateStatus }: AttendanceTableProp
                       : 'Unknown'}
                   </Badge>
                 </TableCell>
-                <TableCell>{record.checkInTime || '-'}</TableCell>
-                <TableCell>{record.checkOutTime || '-'}</TableCell>
+                <TableCell>
+                  {record.checkInTime ? (
+                    <Badge variant="secondary">{formatTime(record.checkInTime)}</Badge>
+                  ) : (
+                    '-'
+                  )}
+                </TableCell>
+                <TableCell>
+                  {record.checkOutTime ? (
+                    <Badge variant="secondary">{formatTime(record.checkOutTime)}</Badge>
+                  ) : (
+                    '-'
+                  )}
+                </TableCell>
                 <TableCell className="text-right">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>

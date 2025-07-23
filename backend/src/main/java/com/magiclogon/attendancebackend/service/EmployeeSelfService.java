@@ -46,8 +46,8 @@ public class EmployeeSelfService {
 
         EmployeeResponseDTO employeeInfo = EmployeeResponseDTO.mapToDTO(employee);
         PageRequest pageRequest = PageRequest.of(0, 5);
-        List<Schedule> schedules = scheduleRepository.findByEmployeeIdAndDateIsAfterOrderByDateAsc(employee.getId(), LocalDate.now(), pageRequest);
-        List<Presence> presences = presenceRepository.findByEmployeeIdAndDateIsBeforeOrderByDateDesc(employee.getId(), LocalDate.now(), pageRequest);
+        List<Schedule> schedules = scheduleRepository.findByEmployeeIdAndDateIsAfterOrderByDateAsc(employee.getId(), LocalDate.now().minusDays(1), pageRequest);
+        List<Presence> presences = presenceRepository.findByEmployeeIdAndDateIsBeforeOrderByDateDesc(employee.getId(), LocalDate.now().minusDays(1), pageRequest);
 
         List<ScheduleOfEmployeeResponseDTO> schedulesDTOs = schedules.stream()
                 .map(ScheduleOfEmployeeResponseDTO::mapToDTO)
