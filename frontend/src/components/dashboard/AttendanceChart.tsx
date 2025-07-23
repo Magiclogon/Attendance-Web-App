@@ -32,10 +32,10 @@ export function AttendanceChart({ data }: AttendanceChartProps) {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="totalPresent" stroke="#22c55e" strokeWidth={2} />
-              <Line type="monotone" dataKey="totalAbsent" stroke="#ef4444" strokeWidth={2} />
-              <Line type="monotone" dataKey="totalLate" stroke="#eab308" strokeWidth={2} />
-              <Line type="monotone" dataKey="totalFree" stroke="#3b82f6" strokeWidth={2} />
+              <Line type="monotone" name="Present" dataKey="totalPresent" stroke="#22c55e" strokeWidth={2} />
+              <Line type="monotone" name="Absent" dataKey="totalAbsent" stroke="#ef4444" strokeWidth={2} />
+              <Line type="monotone" name="Late" dataKey="totalLate" stroke="#eab308" strokeWidth={2} />
+              <Line type="monotone" name="Free" dataKey="totalFree" stroke="#3b82f6" strokeWidth={2} />
             </LineChart>
           </ResponsiveContainer>
         </div>
