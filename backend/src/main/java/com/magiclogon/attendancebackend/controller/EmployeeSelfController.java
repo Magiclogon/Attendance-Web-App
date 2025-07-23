@@ -58,7 +58,7 @@ public class EmployeeSelfController {
             ScheduleOfEmployeeResponseDTO schedule = employeeSelfService.getScheduleAtDate(date);
             return schedule != null ? ResponseEntity.ok(schedule) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponseDTO("No schedule found for this employee", true));
         } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(new ApiResponseDTO("No schedule found for this employee", true));
+            return ResponseEntity.status(400).body(new ApiResponseDTO(e.getMessage(), true));
         }
     }
 
@@ -67,8 +67,9 @@ public class EmployeeSelfController {
     public ResponseEntity<?> getEmployeePresence(@RequestParam(name = "date", required = true) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         try {
             EmployeePresenceDTO attendance = employeeSelfService.getAttendanceAtDate(date);
-            return attendance != null ? ResponseEntity.ok(attendance) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponseDTO("No presences found for this employee", true));        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(400).body(new ApiResponseDTO("No attendance found for this employee", true));
+            return attendance != null ? ResponseEntity.ok(attendance) : ResponseEntity.status(HttpStatus.NO_CONTENT).body(new ApiResponseDTO("No presences found for this employee", true));
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(400).body(new ApiResponseDTO(e.getMessage(), false));
         }
     }
 

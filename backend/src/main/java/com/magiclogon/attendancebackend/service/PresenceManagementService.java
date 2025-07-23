@@ -173,7 +173,7 @@ public class PresenceManagementService {
             int absent = presenceRepository.countByEmployeeInAndDateAndStatusIn(employees, date, List.of(PresenceStatus.ABSENT));
             int free = presenceRepository.countByEmployeeInAndDateAndStatusIn(employees, date, List.of(PresenceStatus.FREE));
 
-            result.add(new DayPresenceStatsDTO(day, present, late, absent, free));
+            result.add(new DayPresenceStatsDTO(day, present, absent, late, free));
         }
         return result;
     }
