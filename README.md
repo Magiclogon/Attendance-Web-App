@@ -31,3 +31,7 @@ The solution eliminates manual attendance processes by using advanced facial rec
 - **Database**: MySQL
 - **Authentication**: JWT (JSON Web Tokens)
 - **Architecture**: Microservices with RESTful APIs
+
+## Deployment
+
+The deployment was made with **Kubernetes** to ensure high availaility and scaling.
