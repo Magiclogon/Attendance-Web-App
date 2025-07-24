@@ -77,6 +77,9 @@ const AttendanceCamera = () => {
             <p className="text-sm text-muted-foreground">
                 It's a 32 characters long code.
             </p>
+            <p className="text-sm text-muted-foreground">
+              Use your camera code available in Settings - Variables
+            </p>
         </CardFooter>
       </Card>
     </div>

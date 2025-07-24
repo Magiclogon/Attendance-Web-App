@@ -36,6 +36,7 @@ interface EmployeeFormProps {
   defaultValues?: Partial<EmployeeFormValues>;
   buttonText?: string;
   dialogTitle?: string;
+  companyName?: string;
 }
 
 export function EmployeeForm({
@@ -43,6 +44,7 @@ export function EmployeeForm({
   defaultValues = {},
   buttonText = 'Add Employee',
   dialogTitle = 'Add New Employee',
+  companyName = 'company',
 }: EmployeeFormProps) {
   const [open, setOpen] = React.useState(false);
 
@@ -166,6 +168,40 @@ export function EmployeeForm({
                 )}
               />
             </div>
+
+            {/* Account Creation Note */}
+            <div className="bg-blue-50 border border-blue-200 rounded-md p-3 mt-4">
+              <div className="flex items-start">
+                <div className="flex-shrink-0">
+                  <svg className="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clipRule="evenodd" />
+                  </svg>
+                </div>
+                <div className="ml-3">
+                  <h3 className="text-sm font-medium text-blue-800">
+                    Account Creation Information
+                  </h3>
+                  <div className="mt-2 text-sm text-blue-700">
+                    <p>
+                      The user created will have an account with:
+                    </p>
+                    <ul className="mt-1 ml-4 list-disc space-y-1">
+                      <li>
+                        <strong>Username:</strong> Last Name + First Name + @ + Company Name
+                        <br />
+                        <span className="text-xs text-blue-600 italic ml-2">Example: SmithJohn@TechCorp</span>
+                      </li>
+                      <li>
+                        <strong>Password:</strong> Last Name + First Name (Lower case)
+                        <br />
+                        <span className="text-xs text-blue-600 italic ml-2">Example: smithjohn</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div className="flex flex-col-reverse sm:flex-row sm:justify-end gap-3 pt-2">
               <Button 
                 type="button" 
