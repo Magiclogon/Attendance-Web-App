@@ -125,12 +125,27 @@ export default function MarkAttendance() {
         throw new Error(response.message || "Verifying failed");
       }
     } catch (err) {
-      setError(err.message || "Error verifying face");
-      toast({
-        title: "Error",
-        description: err.message || "Failed to verify face",
-        variant: "destructive",
-      });
+        let errorMessage = "Error verifying face";
+
+        try {
+          // Try to parse JSON if err.message is a JSON string
+          const parsed = JSON.parse(err.message);
+          if (parsed.error) {
+            errorMessage = parsed.error;
+          }
+        } catch {
+          // If not JSON, fall back to raw message
+          errorMessage = err.message || errorMessage;
+        }
+
+        console.log(errorMessage);
+        setError(errorMessage);
+        toast({
+          title: "Error",
+          description: errorMessage,
+          variant: "destructive",
+        });
+        
     } finally {
       setLoading(false);
     }
