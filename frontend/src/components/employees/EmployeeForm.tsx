@@ -189,15 +189,16 @@ export function EmployeeForm({
                       <li>
                         <strong>Username:</strong> Last Name + First Name + @ + Company Name
                         <br />
-                        <span className="text-xs text-blue-600 italic ml-2">Example: SmithJohn@TechCorp</span>
+                        <span className="text-xs text-blue-600 italic ml-2">Example: SmithChristopher@TechCorp</span>
                       </li>
                       <li>
                         <strong>Password:</strong> Last Name + First Name (Lower case)
                         <br />
-                        <span className="text-xs text-blue-600 italic ml-2">Example: smithjohn</span>
+                        <span className="text-xs text-blue-600 italic ml-2">Example: smithchristopher
+                        </span>
                       </li>
                       <p className="mt-2 text-sm text-blue-700">
-                        In the example above the first name is "John", last name is "Smith", and the company name is "TechCorp".
+                        In the example above the first name is "Christopher", last name is "Smith", and the company name is "TechCorp".
                       </p>
                     </ul>
                   </div>
