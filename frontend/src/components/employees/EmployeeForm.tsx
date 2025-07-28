@@ -196,6 +196,9 @@ export function EmployeeForm({
                         <br />
                         <span className="text-xs text-blue-600 italic ml-2">Example: smithjohn</span>
                       </li>
+                      <p className="mt-2 text-sm text-blue-700">
+                        In the example above the first name is "John", last name is "Smith", and the company name is "TechCorp".
+                      </p>
                     </ul>
                   </div>
                 </div>
