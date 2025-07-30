@@ -35,3 +35,4 @@ The solution eliminates manual attendance processes by using advanced facial rec
 ## Deployment
 
 The deployment was made with **Kubernetes** to ensure high availaility and scaling.
+This is for Youtube
